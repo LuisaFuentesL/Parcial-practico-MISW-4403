@@ -32,7 +32,14 @@ export class TiendaService {
     }
 
     async create(tienda: TiendaEntity): Promise<TiendaEntity> {
-    return await this.tiendaRepository.save(tienda);
+        if (tienda.ciudad.length != 3) {
+            throw new BusinessLogicException(
+                'El código de la ciudad no es válido. Debe tener tres caracteres.',
+                BusinessError.INVALID_CITY_CODE,
+            );
+        }
+    
+        return await this.tiendaRepository.save(tienda);
     }
 
     async update(id: number, tienda: TiendaEntity): Promise<TiendaEntity> {
@@ -44,6 +51,13 @@ export class TiendaService {
         'La tienda con el id dado no fue encontrada',
         BusinessError.NOT_FOUND,
         );
+    
+    if (tienda.ciudad.length != 3) {
+        throw new BusinessLogicException(
+            'El código de la ciudad no es válido. Debe tener tres caracteres.',
+            BusinessError.INVALID_CITY_CODE,
+        );
+    }
 
     return await this.tiendaRepository.save({ ...persistedTienda, ...tienda });
     }

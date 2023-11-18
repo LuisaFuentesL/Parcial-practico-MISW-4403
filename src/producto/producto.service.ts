@@ -31,6 +31,13 @@ export class ProductoService {
     }
 
     async create(producto: ProductoEntity): Promise<ProductoEntity> {
+        const tipos: string[] = ['Perecedero', 'No perecedero'];
+        if (!tipos.includes(producto.tipo)) {
+            throw new BusinessLogicException(
+                'El tipo de producto no es válido',
+                BusinessError.INVALID_TYPE,
+            );
+        }
         return await this.productoRepository.save(producto);
     }
 
@@ -45,6 +52,14 @@ export class ProductoService {
             'El producto con el id dado no fue encontrado',
             BusinessError.NOT_FOUND,
         );
+
+        const tipos: string[] = ['Perecedero', 'No perecedero'];
+        if (!tipos.includes(producto.tipo)) {
+            throw new BusinessLogicException(
+                'El tipo de producto no es válido',
+                BusinessError.INVALID_TYPE,
+            );
+        }
 
         return await this.productoRepository.save({
         ...persistedProducto,
