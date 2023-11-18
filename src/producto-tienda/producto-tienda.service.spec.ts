@@ -35,7 +35,7 @@ describe('ProductoTiendaService', () => {
     for (let i = 0; i < 5; i++) {
       const tienda: TiendaEntity = await tiendaRepository.save({
         nombre: faker.company.name(), 
-        ciudad: faker.lorem.sentence(), 
+        ciudad: faker.string.sample(3).toUpperCase(), 
         direccion: faker.lorem.sentence(),
       });
       tiendasList.push(tienda);
@@ -44,7 +44,7 @@ describe('ProductoTiendaService', () => {
     producto = await productoRepository.save({
       nombre: faker.company.name(),
       precio: faker.number.int(),
-      tipo:  faker.string.sample(3).toUpperCase(),
+      tipo:  "No perecedero",
       tiendas: tiendasList
     });
   }
@@ -56,7 +56,7 @@ describe('ProductoTiendaService', () => {
   it('addTiendaToProducto should return a producto with the tienda added', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(),
       direccion: faker.lorem.sentence(),
     });
 
@@ -67,7 +67,7 @@ describe('ProductoTiendaService', () => {
   it('addTiendaToProducto should throw an exception for an invalid producto', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(),
       direccion: faker.lorem.sentence(),
     });
 
@@ -108,7 +108,7 @@ describe('ProductoTiendaService', () => {
   it('findTiendaFromProducto should throw an exception for a non associated tienda', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(),
       direccion: faker.lorem.sentence(),
     });
 
@@ -118,7 +118,7 @@ describe('ProductoTiendaService', () => {
   it('updateTiendasFromProducto should return a producto with the tiendas updated', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(),
       direccion: faker.lorem.sentence(),
     });
 
@@ -132,7 +132,7 @@ describe('ProductoTiendaService', () => {
   it('updateTiendasFromProducto should throw an exception for an invalid producto', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(),
       direccion: faker.lorem.sentence(),
     });
 
@@ -142,7 +142,7 @@ describe('ProductoTiendaService', () => {
   it('updateTiendasFromProducto should throw an exception for an invalid tienda', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(),
       direccion: faker.lorem.sentence(),
     });
 
@@ -172,12 +172,11 @@ describe('ProductoTiendaService', () => {
   it('deleteTiendaFromProducto should throw an exception for a non associated producto', async () => {
     const tienda: TiendaEntity = await tiendaRepository.save({
       nombre: faker.company.name(), 
-      ciudad: faker.lorem.sentence(), 
+      ciudad: faker.string.sample(3).toUpperCase(), 
       direccion: faker.lorem.sentence(),
     });
 
     await expect(service.deleteTiendaFromProducto(producto.id, tienda.id)).rejects.toHaveProperty("message", "La tienda con el id dado no esta asociada al producto");
   });
-
   
 });

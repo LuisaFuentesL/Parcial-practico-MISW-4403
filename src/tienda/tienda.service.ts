@@ -32,7 +32,7 @@ export class TiendaService {
     }
 
     async create(tienda: TiendaEntity): Promise<TiendaEntity> {
-        if (tienda.ciudad.length != 3) {
+        if (tienda.ciudad.length !== 3) {
             throw new BusinessLogicException(
                 'El código de la ciudad no es válido. Debe tener tres caracteres.',
                 BusinessError.INVALID_CITY_CODE,
@@ -52,7 +52,7 @@ export class TiendaService {
         BusinessError.NOT_FOUND,
         );
     
-    if (tienda.ciudad.length != 3) {
+    if (tienda.ciudad.length !== 3) {
         throw new BusinessLogicException(
             'El código de la ciudad no es válido. Debe tener tres caracteres.',
             BusinessError.INVALID_CITY_CODE,
