@@ -35,7 +35,7 @@ export class TiendaService {
         if (tienda.ciudad.length !== 3) {
             throw new BusinessLogicException(
                 'El código de la ciudad no es válido. Debe tener tres caracteres.',
-                BusinessError.INVALID_CITY_CODE,
+                BusinessError.UNPROCESSABLE_ENTITY,
             );
         }
     
@@ -55,7 +55,7 @@ export class TiendaService {
     if (tienda.ciudad.length !== 3) {
         throw new BusinessLogicException(
             'El código de la ciudad no es válido. Debe tener tres caracteres.',
-            BusinessError.INVALID_CITY_CODE,
+            BusinessError.UNPROCESSABLE_ENTITY,
         );
     }
 

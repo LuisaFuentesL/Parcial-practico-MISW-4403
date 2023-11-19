@@ -35,7 +35,7 @@ export class ProductoService {
         if (!tipos.includes(producto.tipo)) {
             throw new BusinessLogicException(
                 'El tipo de producto no es válido',
-                BusinessError.INVALID_TYPE,
+                BusinessError.UNPROCESSABLE_ENTITY,
             );
         }
         return await this.productoRepository.save(producto);
@@ -57,7 +57,7 @@ export class ProductoService {
         if (!tipos.includes(producto.tipo)) {
             throw new BusinessLogicException(
                 'El tipo de producto no es válido',
-                BusinessError.INVALID_TYPE,
+                BusinessError.UNPROCESSABLE_ENTITY,
             );
         }
 
