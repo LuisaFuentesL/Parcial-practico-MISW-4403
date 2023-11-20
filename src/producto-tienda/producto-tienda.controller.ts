@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { ProductoTiendaService } from './producto-tienda.service';
 import { TiendaEntity } from '../tienda/tienda.entity';
 import { plainToInstance } from 'class-transformer';
 import { TiendaDto } from '../tienda/tienda.dto';
+import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors/business-errors.interceptor';
 
 @Controller('productos')
+@UseInterceptors(BusinessErrorsInterceptor)
 export class ProductoTiendaController {
 
     constructor(private readonly productoTiendaService: ProductoTiendaService) {}
@@ -32,7 +34,7 @@ export class ProductoTiendaController {
 
     @Delete(':productoId/tiendas/:tiendaId')
     @HttpCode(204)
-    async deleteTiendaFromProducto(@Param('tiendaId') tiendaId: number, @Param('productoId') productoId: number): Promise<void> {
-        await this.productoTiendaService.deleteTiendaFromProducto(tiendaId, productoId);
+    async deleteTiendaFromProducto(@Param('productoId') productoId: number, @Param('tiendaId') tiendaId: number) {
+        await this.productoTiendaService.deleteTiendaFromProducto(productoId, tiendaId);
     }
 }

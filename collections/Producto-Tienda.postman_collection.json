@@ -1,0 +1,1661 @@
+{
+	"info": {
+		"_postman_id": "29b08d48-773f-486e-a193-81f02d5fce74",
+		"name": "Producto-Tienda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21091364"
+	},
+	"item": [
+		{
+			"name": "Agregar una nueva tienda a las oferentes de un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{producto_id}}/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{producto_id}}",
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar una receta a un ingrediente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1234,\n    \"nombre\": \"Queso\",\n    \"cantidad\": \"125 g\",\n    \"recetas\": [\n        {\n            \"id\": 123,\n            \"nombre\": \"Arepa con queso\",\n            \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\n            \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\n            \"urlVideo\": \"\",\n            \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Agregar una receta que no existe a un ingrediente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Agregar una receta a un ingrediente que no existe",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Asociar una tienda que no existe a las oferentes de un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La tienda con el id dado no fue encontrada\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{producto_id}}/tiendas/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{producto_id}}",
+						"tiendas",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar una receta a un ingrediente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1234,\n    \"nombre\": \"Queso\",\n    \"cantidad\": \"125 g\",\n    \"recetas\": [\n        {\n            \"id\": 123,\n            \"nombre\": \"Arepa con queso\",\n            \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\n            \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\n            \"urlVideo\": \"\",\n            \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Agregar una receta que no existe a un ingrediente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Agregar una receta a un ingrediente que no existe",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Agregar una tienda a un producto que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El producto con el id dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/00000000-0000-0000-0000-000000000000/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"00000000-0000-0000-0000-000000000000",
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar una receta a un ingrediente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1234,\n    \"nombre\": \"Queso\",\n    \"cantidad\": \"125 g\",\n    \"recetas\": [\n        {\n            \"id\": 123,\n            \"nombre\": \"Arepa con queso\",\n            \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\n            \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\n            \"urlVideo\": \"\",\n            \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Agregar una receta que no existe a un ingrediente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Agregar una receta a un ingrediente que no existe",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una tienda que ofrece un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{producto_id}}/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{producto_id}}",
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una receta de un ingrediente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 123,\n    \"nombre\": \"Arepa con queso\",\n    \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\n    \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\n    \"urlVideo\": \"\",\n    \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\n}"
+				},
+				{
+					"name": "Obtener una receta que no existe de un ingrediente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Obtener una receta de un ingrediente que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\n}"
+				},
+				{
+					"name": "Obtener una receta que no esta asociada a un ingrediente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_2}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_2}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no esta asociada a un ingrediente\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener todas las tiendas que ofrecen un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of tiendas > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{producto_id}}/tiendas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{producto_id}}",
+						"tiendas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener los ingredientes de una receta",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1234,\n        \"nombre\": \"Queso\",\n        \"cantidad\": \"125 g\"\n    }\n]"
+				},
+				{
+					"name": "Obtener los ingredientes de una receta que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"La receta con el id dado no fue encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una tienda que ofrece un producto que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El producto con el id dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/00000000-0000-0000-0000-000000000000/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"00000000-0000-0000-0000-000000000000",
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una receta de un ingrediente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 123,\n    \"nombre\": \"Arepa con queso\",\n    \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\n    \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\n    \"urlVideo\": \"\",\n    \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\n}"
+				},
+				{
+					"name": "Obtener una receta que no existe de un ingrediente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Obtener una receta de un ingrediente que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\n}"
+				},
+				{
+					"name": "Obtener una receta que no esta asociada a un ingrediente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_2}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_2}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no esta asociada a un ingrediente\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar las tiendas que ofrecen un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": \"{{tienda_id_2}}\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos/{{producto_id}}/tiendas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{producto_id}}",
+						"tiendas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar la lista de recetas de un ingrediente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": \"{{receta_id_2}}\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"nombre\": \"Queso\",\r\n    \"cantidad\": \"125 g\",\r\n    \"recetas\": [\r\n        {\r\n            \"id\": 123,\r\n            \"nombre\": \"Arepa con queso\",\r\n            \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\r\n            \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\r\n            \"urlVideo\": \"\",\r\n            \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\r\n        }\r\n    ]\r\n}"
+				},
+				{
+					"name": "Actualizar las recetas que no existen de un ingrediente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n   {\r\n       \"id\": \"00000000-0000-0000-0000-000000000000\"\r\n   }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Actualizar las recetas de un ingrediente que no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{ingrediente_id_2}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar las tiendas que ofrecen un producto, con una tienda inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La tienda con el id dado no fue encontrada\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n   {\r\n       \"id\": \"00000000-0000-0000-0000-000000000000\"\r\n   }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos/{{producto_id}}/tiendas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{producto_id}}",
+						"tiendas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar la lista de recetas de un ingrediente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": \"{{receta_id_2}}\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"nombre\": \"Queso\",\r\n    \"cantidad\": \"125 g\",\r\n    \"recetas\": [\r\n        {\r\n            \"id\": 123,\r\n            \"nombre\": \"Arepa con queso\",\r\n            \"descripcion\": \"Son un clásico de los desayunos, sencillitas y rápidas. Las arepas de queso  o arepitas quesudas son un manjar digno de reyes. Y aunque es una comida popular y callejera, es deliciosa.\",\r\n            \"urlImagen\": \"https://www.lemonblossoms.com/wp-content/uploads/2023/02/Arepas-con-Queso-Recipe-S4.jpg\",\r\n            \"urlVideo\": \"\",\r\n            \"procesoPreparacion\": \"Cocinar la arepa sola, sin relleno. En este caso, primero se cocina la arepa. Una vez cocida, se abre para por un lado para rellenar como una arepa tradicional. Luego se inserta una loncha de queso, y se regresa al sartén a fuego bajo hasta que el relleno se derrita. \"\r\n        }\r\n    ]\r\n}"
+				},
+				{
+					"name": "Actualizar las recetas que no existen de un ingrediente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n   {\r\n       \"id\": \"00000000-0000-0000-0000-000000000000\"\r\n   }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Actualizar las recetas de un ingrediente que no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{ingrediente_id_2}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar una tienda que ofrece un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"ingredientes",
+						"{{ingrediente_id}}",
+						"recetas",
+						"{{receta_id_2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar una receta de un ingrediente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_2}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_2}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Borrar una receta de un ingrediente que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_2}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_2}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				},
+				{
+					"name": "Borrar una receta que no existe de un ingrediente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Borrar una receta que no esta asociada a un ingrediente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no esta asociada a un ingrediente\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar una tienda que no ofrece un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El producto con el id dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/00000000-0000-0000-0000-000000000000/tiendas/{{tienda_id_2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"00000000-0000-0000-0000-000000000000",
+						"tiendas",
+						"{{tienda_id_2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar una receta de un ingrediente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_2}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_2}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Borrar una receta de un ingrediente que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/00000000-0000-0000-0000-000000000000/recetas/{{receta_id_2}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"00000000-0000-0000-0000-000000000000",
+								"recetas",
+								"{{receta_id_2}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"El ingrediente con el id dado no fue encontrado\"\r\n}"
+				},
+				{
+					"name": "Borrar una receta que no existe de un ingrediente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no fue encontrada\"\r\n}"
+				},
+				{
+					"name": "Borrar una receta que no esta asociada a un ingrediente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/ingredientes/{{ingrediente_id}}/recetas/{{receta_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"ingredientes",
+								"{{ingrediente_id}}",
+								"recetas",
+								"{{receta_id_1}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"La receta con el id dado no esta asociada a un ingrediente\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Crear un producto válido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"producto_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Queso\",\r\n    \"precio\": 125,\r\n    \"tipo\": \"No perecedero\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una tienda válida 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"tienda_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"La Tiendita de Luisa\",\r\n    \"ciudad\": \"BGT\",\r\n    \"direccion\": \"Cra 40B #1-H 20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/tiendas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una tienda válida 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"tienda_id_2\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Donde Don Pepe\",\r\n    \"ciudad\": \"BGT\",\r\n    \"direccion\": \"Cra 30B #1-F 11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/tiendas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
